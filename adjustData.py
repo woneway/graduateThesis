@@ -1,6 +1,10 @@
 # _*_ coding: UTF-8 _*_
 from pandas import read_csv
 from datetime import datetime
+
+'''
+将日期2011-1-1转换为20110101
+'''
 def date2number(x):
     x = datetime.strptime(x, '%Y/%m/%d')
     return x.strftime('%Y%m%d')
