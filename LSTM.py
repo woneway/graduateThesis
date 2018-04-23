@@ -1,9 +1,6 @@
 import numpy as np
 import pandas as pd
 
-df = pd.read_table('dataset/relation.csv',sep=' ')
-date = pd.read_csv('dataset/date.csv')
-df = df[:10000]
+df = pd.read_csv('matrix/series.csv')
 
-dff = pd.DataFrame(data=df['idproduct'],index=df['iduser'],columns=df['date'])
-print(dff.head())
+print(df.head(144))
