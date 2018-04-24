@@ -73,7 +73,7 @@ test_X = test_X.reshape((test_X.shape[0], 1, test_X.shape[1]))
 
 # design network
 model = Sequential()
-model.add(LSTM(50,input_shape=(train_X.shape[1],train_X.shape[2])))
+model.add(LSTM(128,input_shape=(train_X.shape[1],train_X.shape[2])))
 model.add(Dense(1))
 model.compile(loss='mae', optimizer='adam')
 # fit network
@@ -99,3 +99,8 @@ inv_y = inv_y[:,0]
 # calculate RMSE
 rmse = sqrt(mean_squared_error(inv_y, inv_yhat))
 print('Test RMSE: %.3f' % rmse)
+
+pyplot.plot(inv_yhat,label="predict")
+pyplot.plot(inv_y,label="actual")
+pyplot.legend()
+pyplot.show()

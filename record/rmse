@@ -1,0 +1,4 @@
+units=128
+loss='mae', optimizer='adam'
+epochs=50, batch_size=40
+Test RMSE: 0.036
