@@ -36,28 +36,34 @@ def series_to_supervised(data, n_in=1, n_out=1, dropnan=True):
 	return agg
  
 # load dataset
-dataset = read_csv('matrix/series.csv')
-
+dataset = read_csv('matrix/series.csv',index_col=0)
+# 不取值userid
 values = dataset.values
-
+# print(values)
 # ensure all data is float
 values = values.astype('float32')
 # normalize features
 scaler = MinMaxScaler(feature_range=(0, 1))
 scaled = scaler.fit_transform(values)
 # frame as supervised learning
-reframed = series_to_supervised(scaled, 4382, 1)
+reframed = series_to_supervised(scaled, 1, 1)
+reframed.drop(reframed.columns[4384:8767],axis=1,inplace=True)
 
-reframed.to_csv("dd.csv")
+# print(reframed.columns.size)   #4383+1
+# print(reframed.iloc[:,0].size) #143
 # split into train and test sets
 values = reframed.values
 
 n_train = 120
 train = values[:n_train, :]
+# print(train)
 test = values[n_train:, :]
+# print(test)
 # split into input and outputs
 train_X, train_y = train[:, :-1], train[:, -1]
+# print(train_y)
 test_X, test_y = test[:, :-1], test[:, -1]
+# print(test_y)
 # reshape input to be 3D [samples, timesteps, features]
 train_X = train_X.reshape((train_X.shape[0], 1, train_X.shape[1]))
 test_X = test_X.reshape((test_X.shape[0], 1, test_X.shape[1]))
@@ -71,7 +77,7 @@ model.add(LSTM(50,input_shape=(train_X.shape[1],train_X.shape[2])))
 model.add(Dense(1))
 model.compile(loss='mae', optimizer='adam')
 # fit network
-history = model.fit(train_X, train_y, epochs=50, batch_size=72, validation_data=(test_X, test_y), verbose=2, shuffle=False)
+history = model.fit(train_X, train_y, epochs=50, batch_size=40, validation_data=(test_X, test_y), verbose=2, shuffle=False)
 # plot history
 pyplot.plot(history.history['loss'], label='train')
 pyplot.plot(history.history['val_loss'], label='test')
