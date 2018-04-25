@@ -5,7 +5,7 @@ import pandas
 
 dfs = pandas.read_csv('./dataset/relation.csv', sep=' ')
 date = pandas.read_csv('./dataset/date.csv')
-dfs = dfs[:10000]
+dfs = dfs[:100000]
 idusers = dfs['iduser'].drop_duplicates() #去重
 # idusers = idusers.sort_values(ascending=True) #排序   取消按照原来顺序
 # print(idusers[:100])
@@ -25,6 +25,7 @@ print(row," ",col)
  创建一个用户数为行，日期数为列的一个数组，value都为0
 '''
 idproduct =  [[0 for i in range(col)] for i in range(row)]
+print('idprodct array finished!')
 
 for index in dfs.index:
     # index:行号
@@ -36,10 +37,10 @@ for index in dfs.index:
     i = idusers_list.index(c_iduser)     
     j = dates_list.index(c_date)
     idproduct[i][j] = c_idproduct
-    # print(i," " ,j," ",c_idproduct)
+    print(i," " ,j," ",c_idproduct)
 
 
 dff = pandas.DataFrame(data=idproduct, columns=list(date['date']), index=idusers)
 print(dff.head())
 
-dff.to_csv('matrix/serise.csv')
+dff.to_csv('matrix/series.csv')
