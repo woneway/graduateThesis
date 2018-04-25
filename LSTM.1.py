@@ -12,7 +12,7 @@ from keras.layers import Dense
 from keras.layers import LSTM
 
 # load dataset
-dataset = read_csv('matrix/serise.csv',index_col=0)
+dataset = read_csv('matrix/series.csv',index_col=0)
 # 不取值userid
 values = dataset.values
 # print(values)
